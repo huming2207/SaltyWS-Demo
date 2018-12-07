@@ -1,0 +1,3 @@
+[submodule "components/SaltyWS"]
+	path = components/SaltyWS
+	url = git@github.com:huming2207/SaltyWS.git
