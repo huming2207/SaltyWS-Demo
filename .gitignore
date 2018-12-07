@@ -5,6 +5,9 @@ cmake-build-debug/
 # VSCode settings
 .vscode/
 
+# CLion settings
+.idea/
+
 # ESP-IDF Config
 *sdkconfig*
 
