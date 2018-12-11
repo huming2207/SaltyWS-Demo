@@ -9,7 +9,8 @@ cmake-build-debug/
 .idea/
 
 # ESP-IDF Config
-*sdkconfig*
+sdkconfig
+sdkconfig.old
 
 # KDevelop
 *.kdev4
