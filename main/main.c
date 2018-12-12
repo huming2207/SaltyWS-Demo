@@ -39,7 +39,7 @@ void app_main()
     char text[] = "Hello websocket!";
     char *send_buf = strdup(text);
     size_t length = strlen(text) + 1;
-    char recv_buf[18] = {'\0'};
+    char recv_buf[30] = {'\0'};
 
     while(true) {
         ESP_LOGI(LOG_TAG, "Sending \"%s\"", send_buf);
@@ -57,10 +57,10 @@ void app_main()
             ESP_LOGE(LOG_TAG, "Failed to receive message, returned %d!", ret);
             return;
         } else {
-            ESP_LOGI(LOG_TAG, "Message received: %s", recv_buf);
+            ESP_LOGI(LOG_TAG, "Message received: %s, len: %d", recv_buf, ret);
         }
 
-        memset(&recv_buf, '\0', sizeof(recv_buf));
+        memset(&recv_buf, '\0', 30);
 
         vTaskDelay(1000/portTICK_PERIOD_MS); // Loop every 1s
     }
