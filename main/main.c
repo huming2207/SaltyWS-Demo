@@ -52,8 +52,29 @@ void app_main()
 
         send_buf = memcpy(send_buf, &text, length);
         vTaskDelay(500/portTICK_PERIOD_MS); // Wait for a while before receiving
+
+        if((ret = salty_trans_open_stream()) < 0) {
+            ESP_LOGE(LOG_TAG, "Failed to open stream, returned %d!", ret);
+            return;
+        } else {
+            ESP_LOGI(LOG_TAG, "Stream opened");
+        }
+
+        stream_info_t *info = NULL;
+        salty_trans_stream_info(info);
+
+        if(info == NULL) {
+            ESP_LOGE(LOG_TAG, "Info returned null!");
+            return;
+        } else {
+            ESP_LOGI(LOG_TAG, "Got info, length %llu, masked: %s, opened: %s, opcode: 0x%X", 
+                                    info->remain_len, 
+                                    info->is_masked ? "yea" : "nah", 
+                                    info->is_opened ? "yea" : "nah",
+                                    info->opcode);
+        }
         
-        if((ret = salty_trans_read(recv_buf, length)) < 0) {
+        if((ret = salty_trans_read(recv_buf, info->remain_len)) < 0) {
             ESP_LOGE(LOG_TAG, "Failed to receive message, returned %d!", ret);
             return;
         } else {
