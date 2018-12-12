@@ -16,6 +16,7 @@
 #include "esp_event_loop.h"
 #include "esp_log.h"
 #include "app_wifi.h"
+#include "sdkconfig.h"
 
 static const char *TAG = "WIFI";
 
