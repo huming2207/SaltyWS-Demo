@@ -60,25 +60,20 @@ void app_main()
             ESP_LOGI(LOG_TAG, "Stream opened");
         }
 
-        stream_info_t *info = NULL;
-        salty_trans_stream_info(info);
+        stream_info_t info;
+        salty_trans_stream_info(&info);
 
-        if(info == NULL) {
-            ESP_LOGE(LOG_TAG, "Info returned null!");
-            return;
-        } else {
-            ESP_LOGI(LOG_TAG, "Got info, length %llu, masked: %s, opened: %s, opcode: 0x%X", 
-                                    info->remain_len, 
-                                    info->is_masked ? "yea" : "nah", 
-                                    info->is_opened ? "yea" : "nah",
-                                    info->opcode);
-        }
+        ESP_LOGI(LOG_TAG, "Got info, length %llu, masked: %s, opened: %s, opcode: 0x%X", 
+                        info.remain_len, 
+                        info.is_masked ? "yea" : "nah", 
+                        info.is_opened ? "yea" : "nah",
+                        info.opcode);
         
-        if((ret = salty_trans_read(recv_buf, info->remain_len)) < 0) {
+        if((ret = salty_trans_read(recv_buf, info.remain_len)) < 0) {
             ESP_LOGE(LOG_TAG, "Failed to receive message, returned %d!", ret);
             return;
         } else {
-            ESP_LOGI(LOG_TAG, "Message received: %s, len: %d", recv_buf, ret);
+            ESP_LOGI(LOG_TAG, "Message received: %s", recv_buf);
         }
 
         memset(&recv_buf, '\0', 30);
